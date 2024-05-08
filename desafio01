@@ -1,0 +1,72 @@
+"""
+Devemos implementar apenas 3 operações depósito, saque e extrato
+Depositar valores positivos
+Todos os depósitos devem ser armazenados em uma variável e exibidos na operação de extrato
+Permitir realizar 3 saques diários com limite máximo de R 500 00 por saque 
+Validar saldo em conta para saque
+Armazenar os saques e exibir no extrato
+"""
+cabecalho = "MENU DE OPERAÇÕES BANCÁRIAS".center(30,"#")
+menu = f'''
+[D] Depositar
+[S] Sacar
+[E] Extrato
+[F] Fechar (Sair)
+'''
+rodape = "FIM MENU".center(30,"#")
+
+opcao   =""
+extrato =""
+saldo   =0.0
+valor   =0.0
+numero_saques=0
+LIMITE_SAQUES=500
+LIMITE_NUM_SAQUES=3
+
+while opcao.upper() != "F":
+    print(cabecalho, menu, rodape)
+    opcao = input("\nQual operação deseja efetuar: ")
+
+    if(opcao.upper() == "D"):
+        valor   = float(input("Qual valor você deseja depositar: "))
+        if valor > 0:
+            saldo   += valor
+            extrato += "+  R$"+str(valor)+"\n"
+            print("Depósito Efetuado".center(130,"!"))
+            continuar = input("...continuar... Enter")
+        else:
+            print(f"Valor Depósito Inválido".center(130,"!"))
+            continuar = input("...continuar... Enter")
+    elif(opcao.upper() == "S"):
+        if numero_saques <= LIMITE_NUM_SAQUES:
+            valor_saque    =   float(  input("Qual valor deseja sacar: R$ ")   )
+            if valor_saque > 0:
+                if valor_saque <= LIMITE_SAQUES:
+                    if saldo >= valor_saque:
+                        saldo    -= valor_saque
+                        extrato  += "-  R$"+str(valor_saque)+"\n"
+                        numero_saques += 1
+                        print("Saque Efetuado".center(130,"!"))
+                    else:
+                        print("Saldo Insuficiente".center(130,"!"))
+                else:
+                    print(f"Seu limite de saque é de R$ {LIMITE_SAQUES}".center(130,"!"))
+            else:
+                print(f"Valor de Saque Inválido".center(130,"!"))
+        else:
+            print(f"Limite de diário de saque excedido. Seu limite diário é de {LIMITE_NUM_SAQUES} saques.".center(130,"!"))
+        continuar = input("...continuar... Enter")
+    elif(opcao.upper() == "E"):
+        print("INÍCIO EXTRATO".center(50,"#"))
+        if extrato != "":
+            print(extrato)
+        else:
+            print("*** Não foi realizada movimentações!")
+        print(f"O saldo atual da conta é R$ {saldo}")
+        print("FIM EXTRATO".center(50,"#"))
+        continuar = input("...continuar... Enter")
+    elif(opcao.upper() != "F"):
+        print("Opção Inválida".center(130,"!"))
+        continuar = input("...continuar... Enter")
+else:
+    print("OBRIGADO POR UTILIZAR O SISTEMA".center(130,"!"))
